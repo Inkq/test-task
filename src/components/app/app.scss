@@ -1,0 +1,70 @@
+@import '../../assets/vars.scss';
+
+.page {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.16;
+  background-color: $light-grey;
+}
+
+.main-content {
+  padding: 48px;
+
+  &__section {
+    display: flex;
+    justify-content: center;
+    column-gap: 40px;
+
+    &--column {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 48px;
+    }
+  }
+
+  &__form {
+    width: 280px;
+  }
+
+  &__table {
+    width: 100%;
+    max-width: 596px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    & {
+      padding: 15px;
+    }
+
+    &__section {
+      column-gap: 10px;
+    }
+
+    &__table {
+      overflow-x: scroll;
+    }
+  }
+
+  @media screen and (max-width: $mobile) {
+    &__section {
+      flex-direction: column;
+      align-items: center;
+      row-gap: 20px;
+    }
+
+    &__section--column {
+      row-gap: 0;
+    }
+  }
+}
+
+.container {
+  max-width: 1140px;
+  height: 100%;
+  margin: 0 auto;
+}

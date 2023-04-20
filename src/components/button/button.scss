@@ -1,0 +1,31 @@
+@import "../../assets/vars.scss";
+
+.btn {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  line-height: 1.16;
+  border: none;
+  cursor: pointer;
+
+  &--withBG {
+    background-color: $light-blue;
+    transition: background .25s ease-in-out, transform .2s cubic-bezier(.165, .84, .44, 1);
+
+    &:hover {
+      background-color: $light-blue2;
+    }
+
+    &:enabled:active {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      background-color: $dark-grey;
+      cursor: auto;
+    }
+  }
+
+  &--withoutBG {
+    background-color: transparent;
+  }
+}
