@@ -5,10 +5,12 @@ type FormFieldProps = {
   placeholder: string;
   type: string;
   name: string;
-  required: boolean;
+  required?: boolean;
   handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>, valueType: string) => void;
   value: string;
   valueType: string;
+  handleBlurInput: (e: React.FocusEvent<HTMLInputElement>, valueType: string) => void;
+  autoComplete?: string;
 }
 
 export default function FormField({
@@ -19,19 +21,23 @@ export default function FormField({
   required,
   value,
   handleChangeInput,
-  valueType }: FormFieldProps) {
+  valueType,
+  handleBlurInput,
+  autoComplete }: FormFieldProps) {
 
   return (
     <div className={`${className} form-field`}>
       <label className="form-field__label">{name}</label>
       <input
         onChange={(e) => handleChangeInput(e, valueType)}
+        onBlur={(e) => handleBlurInput(e, valueType)}
         className="form-field__input"
         value={value}
         type={type}
         name={name}
         placeholder={placeholder}
-        required={required} />
+        required={required}
+        autoComplete={autoComplete} />
     </div>
   );
 }

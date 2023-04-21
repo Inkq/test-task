@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { NameSpace } from "../../consts";
-import { FormProcess, FormData } from "../../types";
+import { FormProcess, FormData, ValidationError } from "../../types";
 
 const initialState: FormProcess = {
   formData: {
@@ -9,6 +9,12 @@ const initialState: FormProcess = {
     age: "",
     city: ""
   },
+
+  validationError: {
+    name: "",
+    surname: "",
+    age: ""
+  }
 };
 
 export const formProcess = createSlice({
@@ -18,8 +24,11 @@ export const formProcess = createSlice({
     changeFormData: (state, action: PayloadAction<FormData>) => {
       state.formData = action.payload;
     },
+    setFormValidationError: (state, action: PayloadAction<ValidationError>) => {
+      state.validationError = action.payload;
+    }
   },
 
 });
 
-export const { changeFormData } = formProcess.actions;
+export const { changeFormData, setFormValidationError } = formProcess.actions;

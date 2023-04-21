@@ -1,11 +1,12 @@
-import { changeFormData } from "../store/form-process/form-process";
-import { getFormData } from "../store/form-process/selectors";
+import { changeFormData, setFormValidationError } from "../store/form-process/form-process";
+import { getFormData, getValidationError } from "../store/form-process/selectors";
 import { useAppSelector, useAppDispatch } from "./store";
-import { FormData } from "../types";
+import { FormData, ValidationError } from "../types";
 import { addRow } from "../store/table-process/table-process";
 
 export default function useTableAddForm() {
   const form = useAppSelector(getFormData);
+  const validationError = useAppSelector(getValidationError);
   const dispatch = useAppDispatch();
 
   function setForm(formData: FormData) {
@@ -16,5 +17,9 @@ export default function useTableAddForm() {
     dispatch(addRow(formData));
   }
 
-  return [form, setForm, handleSubmit];
+  function setValidationError(errorObj: ValidationError) {
+    dispatch(setFormValidationError(errorObj))
+  }
+
+  return [form, setForm, handleSubmit, setValidationError, validationError];
 }

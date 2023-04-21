@@ -7,6 +7,8 @@ export type FormData = {
   city: string;
 }
 
+export type ValidationError = Omit<FormData, "city">
+
 export type TableRowData = {
   name: string;
   surname: string;
@@ -40,6 +42,7 @@ export type TableCurrentRow = {
 
 export type FormProcess = {
   formData: FormData;
+  validationError: ValidationError;
 }
 
 export type GlobalProcess = {
