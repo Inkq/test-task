@@ -1,0 +1,53 @@
+@import "../../assets/vars.scss";
+
+.modal-window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: hsla(0, 0, 0, 0.4);
+  z-index: 999;
+  transition: 0.3s opacity ease-in;
+  opacity: 0;
+  pointer-events: none;
+
+  &--active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &__content {
+    position: relative;
+    width: 400px;
+    min-height: 378px;
+    padding: 30px 40px;
+    background: $white;
+    border-radius: 8px;
+    background-color: $white1;
+  }
+
+  &__button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 24px;
+    height: 24px;
+    line-height: 0;
+    cursor: pointer;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    fill: $grey2;
+    transition: 0.3s fill linear;
+
+    &:hover {
+      fill: $dark-grey1;
+    }
+  }
+}
