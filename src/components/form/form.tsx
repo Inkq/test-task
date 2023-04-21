@@ -29,14 +29,12 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
     }
   }, [form, validationError]);
 
+
   function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>, valueType: string) {
     const { value, name } = e.target;
 
     if ((valueType === ValueType.OnlyNumbers && !/[^0-9.]/g.test(value)) || (valueType === ValueType.OnlyLetters && !/[0-9 ]+/g.test(value))) {
-      if (validationError[name as keyof typeof validationError]) {
-        validate(value, name, valueType);
-      }
-
+      validate(value, name, valueType);
       setForm({ ...form, [name]: value });
     }
   }
@@ -50,21 +48,11 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
       setValidationError({ ...validationError, [name]: "Incorrect number" });
     } else if (valueType === ValueType.OnlyLetters && value.length < 3) {
       setValidationError({ ...validationError, [name]: "Must contain minimum 3 characters" });
-    } else if (valueType === ValueType.OnlyLetters && value.length < 3) {
-      setValidationError({ ...validationError, [name]: "Must contain 20 characters" });
+    } else if (valueType === ValueType.OnlyLetters && value.length > 20) {
+      setValidationError({ ...validationError, [name]: "Must contain maximum 20 characters" });
     } else {
       setValidationError({ ...validationError, [name]: "" });
     }
-  }
-
-  function handleBlurInput(e: React.FocusEvent<HTMLInputElement>, valueType: string) {
-    const { value, name } = e.target;
-
-    if (value !== "") {
-      validate(value, name, valueType);
-    }
-
-    setForm({ ...form, [name]: value });
   }
 
   function handleClickDropdown(e: React.MouseEvent<HTMLLIElement>, value: string) {
@@ -95,7 +83,6 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         handleChangeInput={handleChangeInput}
         value={form.name}
         valueType={ValueType.OnlyLetters}
-        handleBlurInput={handleBlurInput}
         autoComplete="off"
       />
       {validationError.surname && <span className="form__validation">{validationError.surname}</span>}
@@ -107,7 +94,6 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         handleChangeInput={handleChangeInput}
         value={form.surname}
         valueType={ValueType.OnlyLetters}
-        handleBlurInput={handleBlurInput}
         autoComplete="off"
       />
       {validationError.age && <span className="form__validation">{validationError.age}</span>}
@@ -119,11 +105,10 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         handleChangeInput={handleChangeInput}
         value={form.age}
         valueType={ValueType.OnlyNumbers}
-        handleBlurInput={handleBlurInput}
         autoComplete="off"
       />
       <DropDownMenu className="form__dropdown-menu" value={form.city} handleClickDropdown={handleClickDropdown} />
       <Button disabled={isBlocked} className="form__btn" modifier="withBG">{buttonText}</Button>
     </form >
   );
-})
+});

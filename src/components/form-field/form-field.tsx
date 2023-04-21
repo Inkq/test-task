@@ -9,7 +9,6 @@ type FormFieldProps = {
   handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>, valueType: string) => void;
   value: string;
   valueType: string;
-  handleBlurInput: (e: React.FocusEvent<HTMLInputElement>, valueType: string) => void;
   autoComplete?: string;
 }
 
@@ -22,7 +21,6 @@ export default function FormField({
   value,
   handleChangeInput,
   valueType,
-  handleBlurInput,
   autoComplete }: FormFieldProps) {
 
   return (
@@ -30,7 +28,6 @@ export default function FormField({
       <label className="form-field__label">{name}</label>
       <input
         onChange={(e) => handleChangeInput(e, valueType)}
-        onBlur={(e) => handleBlurInput(e, valueType)}
         className="form-field__input"
         value={value}
         type={type}
