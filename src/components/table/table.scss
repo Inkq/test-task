@@ -137,3 +137,23 @@
     }
   }
 }
+
+.table__body-row-enter {
+  opacity: 0;
+  //background-color: green;
+}
+
+.table__body-row-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in, //background-color 0.5s;
+}
+
+.table__body-row-exit {
+  opacity: 1;
+  //background-color: #fff;
+}
+
+.table__body-row-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-in, //background-color 0.5s;
+}

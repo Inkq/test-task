@@ -2,6 +2,11 @@
 
 .form-field {
 
+  &__validation {
+    margin-bottom: 2px;
+    color: $red1;
+  }
+
   &__input {
     display: block;
     outline: none;

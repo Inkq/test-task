@@ -6,7 +6,8 @@ import { TableRow, TTable } from "../../types";
 import Button from "../button/button";
 import { openModal } from "../../store/global-process/global-process";
 import { nanoid } from "@reduxjs/toolkit";
-import { memo } from 'react';
+import { createRef, memo } from 'react';
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 
 type TableProps = {
   tableData: TTable;
@@ -30,7 +31,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
     if (rowsCount <= dataRowsCount) return (
       <tr key={nanoid()} className="table__body-row table__body-row--big">
         {tableCells.map((cell: { id: number, name: string }) =>
-          (<td key={cell.id} className={`table__body-cell ${(cell.name === "") && "table__body-cell--centered"}`}></td>))}
+          (<td key={cell.id} className={`table__body-cell ${cell.name === "" ? "table__body-cell--centered" : ""}`}></td>))}
       </tr>
     );
 
@@ -38,9 +39,9 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
 
     for (let i = dataRowsCount; i <= rowsCount; i++) {
       const element =
-        <tr key={nanoid()} className={`table__body-row ${(i === rowsCount) && "table__body-row--big"}`}>
+        <tr key={nanoid()} className={`table__body-row ${(i === rowsCount) ? "table__body-row--big" : ""}`}>
           {tableCells.map((cell: { id: number, name: string }) =>
-            (<td key={cell.id} className={`table__body-cell ${(cell.name === "") && "table__body-cell--centered"}`}></td>))}
+            (<td key={cell.id} className={`table__body-cell ${cell.name === "" ? "table__body-cell--centered" : ""}`}></td>))}
         </tr>
 
       arr.push(element);
@@ -51,33 +52,37 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
 
   function getTableBodyRows(rows: TableRow[]) {
     return rows.map((row) => {
+      const nodeRef: React.RefObject<HTMLTableRowElement> = createRef();
+
       return (
-        <tr className="table__body-row" key={row.id}>
-          {getCellsWithData(row)}
-          <td className="table__body-cell table__body-cell--centered">
-            <Button
-              disabled={false}
-              className="table__row-button table__row-button--blue"
-              modifier="withoutBG"
-              onClick={() => {
-                dispatch(openModal());
-                dispatch(sendRowData({
-                  tableId: tableData.id,
-                  rowId: row.id,
-                  data: { name: row.data.name, surname: row.data.surname, age: row.data.age, city: row.data.city }
-                }))
-              }}>Edit</Button>
-          </td>
-          <td className="table__body-cell table__body-cell--centered">
-            <Button
-              disabled={false}
-              className="table__row-button table__row-button--red"
-              modifier="withoutBG"
-              onClick={() => dispatch(removeRow({ tableId: tableData.id, rowId: row.id }))}>
-              Delete
-            </Button>
-          </td>
-        </tr>
+        <CSSTransition key={row.id} classNames="table__body-row" timeout={500} nodeRef={nodeRef}>
+          <tr className="table__body-row" ref={nodeRef}>
+            {getCellsWithData(row)}
+            <td className="table__body-cell table__body-cell--centered">
+              <Button
+                disabled={false}
+                className="table__row-button table__row-button--blue"
+                modifier="withoutBG"
+                onClick={() => {
+                  dispatch(openModal());
+                  dispatch(sendRowData({
+                    tableId: tableData.id,
+                    rowId: row.id,
+                    data: { name: row.data.name, surname: row.data.surname, age: row.data.age, city: row.data.city }
+                  }))
+                }}>Edit</Button>
+            </td>
+            <td className="table__body-cell table__body-cell--centered">
+              <Button
+                disabled={false}
+                className="table__row-button table__row-button--red"
+                modifier="withoutBG"
+                onClick={() => dispatch(removeRow({ tableId: tableData.id, rowId: row.id }))}>
+                Delete
+              </Button>
+            </td>
+          </tr>
+        </CSSTransition>
       );
     });
   }
@@ -109,7 +114,9 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
         </thead>
         <tbody className="table__body">
           <>
-            {getTableBodyRows(tableData.rows)}
+            <TransitionGroup component={null}>
+              {getTableBodyRows(tableData.rows)}
+            </TransitionGroup>
             {getEmpyRows(TABLE_CELLS_CAPPION, rowsCount, dataRowsCount)}
           </>
         </tbody>

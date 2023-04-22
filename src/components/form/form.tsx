@@ -40,7 +40,7 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
   }
 
   function validate(value: string, name: string, valueType: string) {
-    if (valueType === ValueType.OnlyNumbers && Number(value) < 1) {
+    if (valueType === ValueType.OnlyNumbers && (Number(value) < 1)) {
       setValidationError({ ...validationError, [name]: "Must be greater than zero" });
     } else if (valueType === ValueType.OnlyNumbers && Number(value) > 150) {
       setValidationError({ ...validationError, [name]: "Must be less than 150" });
@@ -74,7 +74,6 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
 
   return (
     <form onSubmit={handleFormSubmit} className={`${className} form`} action="#" method="post">
-      {validationError.name && <span className="form__validation">{validationError.name}</span>}
       <FormField
         className="form__field-wrapper"
         type="text" name="name"
@@ -84,8 +83,8 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         value={form.name}
         valueType={ValueType.OnlyLetters}
         autoComplete="off"
+        validationError={validationError}
       />
-      {validationError.surname && <span className="form__validation">{validationError.surname}</span>}
       <FormField
         className="form__field-wrapper"
         type="text" name="surname"
@@ -95,8 +94,8 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         value={form.surname}
         valueType={ValueType.OnlyLetters}
         autoComplete="off"
+        validationError={validationError}
       />
-      {validationError.age && <span className="form__validation">{validationError.age}</span>}
       <FormField
         className="form__field-wrapper"
         type="text" name="age"
@@ -106,6 +105,7 @@ export default memo(function Form({ useFormHook, buttonText, className }: FormPr
         value={form.age}
         valueType={ValueType.OnlyNumbers}
         autoComplete="off"
+        validationError={validationError}
       />
       <DropDownMenu className="form__dropdown-menu" value={form.city} handleClickDropdown={handleClickDropdown} />
       <Button disabled={isBlocked} className="form__btn" modifier="withBG">{buttonText}</Button>

@@ -32,15 +32,15 @@ export default function DropDownMenu({ className, value, handleClickDropdown }: 
       <div className="dropdown-menu__input-wrapper" onClick={() => setIsOpen(!isOpen)}>
         <label className="dropdown-menu__label">City</label>
         <input className="dropdown-menu__input" type="text" readOnly placeholder="City" value={value} />
-        <svg className={`dropdown-menu__icon ${isOpen && "dropdown-menu__icon--rotated"}`} width="14" height="14">
+        <svg className={`dropdown-menu__icon ${isOpen ? "dropdown-menu__icon--rotated" : ""}`} width="14" height="14">
           <use xlinkHref="/icons-sprite.svg#icon-arrow" />
         </svg>
       </div>
-      <ul className={`dropdown-menu__options ${isOpen && "dropdown-menu__options--opened"}`}>
+      <ul className={`dropdown-menu__options ${isOpen ? "dropdown-menu__options--opened" : ""}`}>
         {CITIES.map((city) => (
           <li
             key={city}
-            className={`dropdown-menu__option ${value === city && "dropdown-menu__option--disabled"}`}
+            className={`dropdown-menu__option ${value === city ? "dropdown-menu__option--disabled" : ""}`}
             onClick={(e) => { handleClickDropdown(e, city); setIsOpen(false); }}>{city}
           </li>
         ))}

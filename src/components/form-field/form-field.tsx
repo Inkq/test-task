@@ -1,3 +1,4 @@
+import { ValidationError } from "../../types";
 import "./form-field.scss";
 
 type FormFieldProps = {
@@ -10,6 +11,7 @@ type FormFieldProps = {
   value: string;
   valueType: string;
   autoComplete?: string;
+  validationError: ValidationError;
 }
 
 export default function FormField({
@@ -21,10 +23,12 @@ export default function FormField({
   value,
   handleChangeInput,
   valueType,
-  autoComplete }: FormFieldProps) {
+  autoComplete,
+  validationError }: FormFieldProps) {
 
   return (
     <div className={`${className} form-field`}>
+      {validationError[name as keyof typeof validationError] && <span className="form-field__validation">{validationError[name as keyof typeof validationError]}</span>}
       <label className="form-field__label">{name}</label>
       <input
         onChange={(e) => handleChangeInput(e, valueType)}
