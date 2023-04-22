@@ -27,7 +27,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
     });
   }
 
-  function getEmpyRows(tableCells: any, rowsCount: number, dataRowsCount: number) {
+  function getEmptyRows(tableCells: any, rowsCount: number, dataRowsCount: number) {
     if (rowsCount <= dataRowsCount) return (
       <tr key={nanoid()} className="table__body-row table__body-row--big">
         {tableCells.map((cell: { id: number, name: string }) =>
@@ -55,7 +55,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
       const nodeRef: React.RefObject<HTMLTableRowElement> = createRef();
 
       return (
-        <CSSTransition key={row.id} classNames="table__body-row" timeout={500} nodeRef={nodeRef}>
+        <CSSTransition key={row.id} classNames="table__body-row-" timeout={500} nodeRef={nodeRef}>
           <tr className="table__body-row" ref={nodeRef}>
             {getCellsWithData(row)}
             <td className="table__body-cell table__body-cell--centered">
@@ -117,7 +117,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
             <TransitionGroup component={null}>
               {getTableBodyRows(tableData.rows)}
             </TransitionGroup>
-            {getEmpyRows(TABLE_CELLS_CAPPION, rowsCount, dataRowsCount)}
+            {getEmptyRows(TABLE_CELLS_CAPPION, rowsCount, dataRowsCount)}
           </>
         </tbody>
       </table>
