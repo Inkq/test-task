@@ -93,16 +93,17 @@
 
       &--enter-active {
         opacity: 1;
-        transition: opacity 0.5s ease-in;
+        transition: opacity 0.7s ease-in;
       }
 
       &--exit {
         opacity: 1;
+        display: none;
       }
 
       &--exit-active {
         opacity: 0;
-        transition: opacity 0.5s ease-in;
+        transition: opacity 0.7s ease-in;
       }
     }
 
@@ -113,7 +114,7 @@
       height: 32px;
 
       &--centered {
-        max-width: 96px;
+        width: 96px;
         text-align: center;
         border-right: none;
       }
@@ -152,6 +153,10 @@
 
     &__body-cell {
       padding: 4px 6px;
+
+      &--centered {
+        width: 65px;
+      }
     }
   }
 }

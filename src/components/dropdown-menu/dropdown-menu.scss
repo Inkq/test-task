@@ -51,24 +51,29 @@
   &__options {
     position: absolute;
     z-index: 1;
-    display: none;
     top: 46px;
     width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
     background-color: $white;
-    border: 1px solid $light-grey1;
+    border: 1px solid #E6ECEF;
     border-radius: 4px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+    height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    visibility: hidden;
 
-    &--opened {
-      display: block;
+    &--open {
+      visibility: visible;
+      height: 176px;
     }
   }
 
   &__option {
     position: relative;
+    height: 44px;
     padding: 14px;
     color: $grey1;
     cursor: pointer;

@@ -36,7 +36,7 @@ export default function DropDownMenu({ className, value, handleClickDropdown }: 
           <use xlinkHref="/icons-sprite.svg#icon-arrow" />
         </svg>
       </div>
-      <ul className={`dropdown-menu__options ${isOpen ? "dropdown-menu__options--opened" : ""}`}>
+      {<ul className={`dropdown-menu__options ${isOpen ? "dropdown-menu__options--open" : ""}`}>
         {CITIES.map((city) => (
           <li
             key={city}
@@ -44,7 +44,7 @@ export default function DropDownMenu({ className, value, handleClickDropdown }: 
             onClick={(e) => { handleClickDropdown(e, city); setIsOpen(false); }}>{city}
           </li>
         ))}
-      </ul>
+      </ul>}
     </div>
   );
 }

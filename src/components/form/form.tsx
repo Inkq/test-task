@@ -11,6 +11,8 @@ enum ValueType {
   OnlyLetters = "onlyLetters",
 }
 
+type FormHook = [FormData, Dispatch<SetStateAction<FormData>> | ((obj: FormData) => void), ((obj: FormData) => void), React.Dispatch<React.SetStateAction<ValidationError>> | ((errorObj: ValidationError) => void), ValidationError]
+
 type FormProps = {
   useFormHook: () => (ValidationError | ((formData: FormData) => void))[];
   buttonText: string;
@@ -18,7 +20,7 @@ type FormProps = {
 }
 
 export default memo(function Form({ useFormHook, buttonText, className }: FormProps) {
-  const [form, setForm, handleSubmit, setValidationError, validationError] = useFormHook() as [FormData, Dispatch<SetStateAction<FormData>> | ((obj: FormData) => void), ((obj: FormData) => void), React.Dispatch<React.SetStateAction<ValidationError>> | ((errorObj: ValidationError) => void), ValidationError]
+  const [form, setForm, handleSubmit, setValidationError, validationError] = useFormHook() as FormHook;
   const [isBlocked, setIsBlocked] = useState(true);
 
   useEffect(() => {

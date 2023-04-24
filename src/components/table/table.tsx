@@ -1,11 +1,10 @@
 import "./table.scss";
-import { TABLE_CELLS_CAPPION } from "../../consts";
+import { TABLE_CELLS_CAPTION } from "../../consts";
 import { useAppDispatch } from "../../hooks/store";
 import { copyTable, removeRow, removeTable, sendRowData } from "../../store/table-process/table-process";
 import { TableRow, TTable } from "../../types";
 import Button from "../button/button";
 import { openModal } from "../../store/global-process/global-process";
-import { nanoid } from "@reduxjs/toolkit";
 import { createRef, memo } from 'react';
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 
@@ -20,16 +19,12 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
   const dataRowsCount = tableData.rows.length + 1;
 
   function getCellsWithData(row: TableRow) {
-    return Object.values(row.data).map((cell, index) => {
-      return (
-        <td className="table__body-cell" key={index}>{cell}</td>
-      );
-    });
+    return Object.values(row.data).map((cell, index) => <td className="table__body-cell" key={index}>{cell}</td>);
   }
 
   function getEmptyRows(tableCells: any, rowsCount: number, dataRowsCount: number) {
     if (rowsCount <= dataRowsCount) return (
-      <tr key={nanoid()} className="table__body-row table__body-row--big">
+      <tr className="table__body-row table__body-row--big">
         {tableCells.map((cell: { id: number, name: string }) =>
           (<td key={cell.id} className={`table__body-cell ${cell.name === "" ? "table__body-cell--centered" : ""}`}></td>))}
       </tr>
@@ -39,7 +34,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
 
     for (let i = dataRowsCount; i <= rowsCount; i++) {
       const element =
-        <tr key={nanoid()} className={`table__body-row ${(i === rowsCount) ? "table__body-row--big" : ""}`}>
+        <tr key={i} className={`table__body-row ${(i === rowsCount) ? "table__body-row--big" : ""}`}>
           {tableCells.map((cell: { id: number, name: string }) =>
             (<td key={cell.id} className={`table__body-cell ${cell.name === "" ? "table__body-cell--centered" : ""}`}></td>))}
         </tr>
@@ -50,7 +45,7 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
     return arr;
   }
 
-  function getTableBodyRows(rows: TableRow[]) {
+  function getDataRows(rows: TableRow[]) {
     return rows.map((row) => {
       const nodeRef: React.RefObject<HTMLTableRowElement> = createRef();
 
@@ -109,15 +104,15 @@ export default memo(function Table({ tableData, rowsCount, className }: TablePro
       <table className="table__table">
         <thead className="table__header">
           <tr className="table__header-row">
-            {TABLE_CELLS_CAPPION.map((cell) => <td className="table__header-cell" key={cell.id}>{cell.name}</td>)}
+            {TABLE_CELLS_CAPTION.map((cell) => <td className="table__header-cell" key={cell.id}>{cell.name}</td>)}
           </tr>
         </thead>
         <tbody className="table__body">
           <>
             <TransitionGroup component={null}>
-              {getTableBodyRows(tableData.rows)}
+              {getDataRows(tableData.rows)}
             </TransitionGroup>
-            {getEmptyRows(TABLE_CELLS_CAPPION, rowsCount, dataRowsCount)}
+            {getEmptyRows(TABLE_CELLS_CAPTION, rowsCount, dataRowsCount)}
           </>
         </tbody>
       </table>
